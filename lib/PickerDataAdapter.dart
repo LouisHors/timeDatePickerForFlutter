@@ -15,7 +15,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
 
   // 解析数据
   void _parseData(final List pickerData) {
-    if (pickerData != null && pickerData.length > 0 && data == null && data.length == 0) {
+    if (pickerData != null && pickerData.length > 0 && (data == null && data.length == 0)) {
       if (data == null) data = new List<PickerItem<T>>();
       if (isArray) {
         _paraseArrayPickerDataItem(pickerData, data);
@@ -36,10 +36,10 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
       PickerItem item = new PickerItem<T>(children: List<PickerItem<T>>());
       data.add(item);
 
-      for (int i = 0; i< newTmp.length; i++) {
-        var tmp = newTmp[i];
-        if (tmp is T) {
-          item.children.add(new PickerItem<T>(value: tmp));
+      for (int j = 0; j< newTmp.length; j++) {
+        var ctmp = newTmp[i];
+        if (ctmp is T) {
+          item.children.add(new PickerItem<T>(value: ctmp));
         }else if (T == String) {
           String _tmp = tmp.toString();
           item.children.add(new PickerItem<T>(value: _tmp as T));
@@ -67,7 +67,7 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
             List<PickerItem> _children = new List<PickerItem<T>>();
             print('ad: ${data.runtimeType.toString()}');
             data.add(new PickerItem<T>(value: _tmpMapList[j], children: _children));
-            _parsePickerDataItem(_tmp, data);
+            _parsePickerDataItem(_tmp, _children);
           }
         }
       }else if (T == String && !(item is List)) {
@@ -100,7 +100,6 @@ class PickerDataAdapter<T> extends PickerAdapter<T> {
       }else {
         _datas = null;
       }
-      return;
     }
   }
 

@@ -127,7 +127,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
 
   // 不同类型的数据长度
   static const List<List<int>> lengths = const [
-    [12, 31, 0],
+    [0, 12, 31],
     [24, 60],
     [24, 60, 60],
     [12, 60, 2],
@@ -188,7 +188,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
 
   @override
   void setColumn(int index) {
-    _column = index;
+    _column = index + 1;
     if (_column < 0) _column = 0;
   }
 
@@ -217,7 +217,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
       case 0: // 年， 分几几年和全称两种情况
         if (twoDigitYear != null && twoDigitYear) {
           _text = "${_yearBegin + index}";
-          _text = "${text.substring(_text.length - (_text.length - 2), _text.length)}${_checkStr(yearSuffix)}";
+          _text = "${_text.substring(_text.length - (_text.length - 2), _text.length)}${_checkStr(yearSuffix)}";
         }else {
           _text = "${_yearBegin + index}${_checkStr(yearSuffix)}";
         }
@@ -287,7 +287,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
 
   @override
   void doShow() {
-    if (yearBegin == 0) {
+    if (_yearBegin == 0) {
       getLength();
     }
     for (int i = 0; i < getMaxLevel(); i++) {
@@ -306,7 +306,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
           picker.selectedIdx[i] = value.hour;
           break;
         case 4:
-          picker.selectedIdx[i] = minuteInterval == null || minuteInterval < 2 ? value.minute : value.minute ~/ minuteInterval;
+          picker.selectedIdx[i] = (minuteInterval == null || minuteInterval < 2) ? value.minute : value.minute ~/ minuteInterval;
           break;
         case 5:
           picker.selectedIdx[i] = value.second;
@@ -347,7 +347,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
         h = index;
         break;
       case 4:
-        m = minuteInterval == null || minuteInterval < 2 ? index : index * minuteInterval;
+        m = (minuteInterval == null || minuteInterval < 2) ? index : index * minuteInterval;
         break;
       case 5:
         s = index;
@@ -357,7 +357,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
           if (h == 0) h = 12;
           if (h > 12) h = h -12;
         }else {
-          if (h > 12) h = h + 12;
+          if (h < 12) h = h + 12;
           if (h == 12) h = 0;
         }
         break;

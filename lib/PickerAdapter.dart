@@ -32,10 +32,43 @@ abstract class PickerAdapter<T> {
     );
   }
 
+    Widget makeTextEx(Widget child, String text, Widget postfix, Widget suffix, bool isSel) {
+    List<Widget> items = [];
+    if (postfix != null)
+      items.add(postfix);
+    items.add(child ?? new Text(text, style: (isSel ? picker.selectedStyle : null)));
+    if (suffix != null)
+      items.add(suffix);
+
+    var _txtColor = Colors.black87;
+    var _txtSize = Picker.defaultTextSize;
+    if (isSel && picker.selectedStyle != null) {
+      if (picker.selectedStyle.color != null)
+        _txtColor = picker.selectedStyle.color;
+      if (picker.selectedStyle.fontSize != null)
+        _txtSize = picker.selectedStyle.fontSize;
+    }
+
+    return new Container(
+        alignment: Alignment.center,
+        child: DefaultTextStyle(
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            textAlign: picker.textAlign,
+            style: picker.textStyle ??
+                new TextStyle(
+                    color: _txtColor, fontSize: _txtSize),
+            child: Wrap(
+              children: items,
+            )
+        )
+    );
+  }
+
   String getText() {
     return getSelectedValues().toString();
   }
-
+  
   List<T> getSelectedValues() {
     return [];
   }

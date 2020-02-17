@@ -78,7 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void showDatePicker(BuildContext context) {
     Picker(
       shouldHideHeader: true,
-      adapter: PickerDateTimeDataAdapter(),
+      adapter: new PickerDateTimeDataAdapter(
+        customColumnType: [0, 1, 2],
+        yearSuffix: "年",
+        monthSuffix: "月",
+        daySuffix: "日"
+      ),
       title: Text("请选择日期"),
       selectedStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List value) {
@@ -91,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
     new Picker(
       shouldHideHeader: true,
       adapter: new PickerDateTimeDataAdapter(
-        customColumnType: [3, 4, 5],
+        customColumnType: [3, 4],
       ),
       title: Text("请选择时间"),
       selectedStyle: TextStyle(color: Colors.blue),
@@ -103,22 +108,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void showDateTimePicker(BuildContext context) {
     new Picker(
+      shouldHideHeader: true,
       adapter: PickerDateTimeDataAdapter(
-        type: PickerDateTimeType.kMDYHM,
-        isNumberMonth: true,
+        customColumnType: [0, 1, 2, 3, 4],
         yearSuffix: "年",
-        monthSuffix: "",
-        daySuffix: "",
+        monthSuffix: "月",
+        daySuffix: "日",
       ),
       title: Text("请选择时间日期"),
+      selectedStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List value) {
-        print(picker.adapter.text);
+        print((picker.adapter as PickerDateTimeDataAdapter).value);
       },
-      onSelect: (Picker picker, int index, List<int> selectedIdx) {
-        this.setState(() {
-          stateText = picker.adapter.toString();
-        });
-      }
-    ).show(_scaffoldKey.currentState);
+    ).showModal(this.context);
   }
 }

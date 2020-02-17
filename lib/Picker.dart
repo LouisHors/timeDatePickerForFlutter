@@ -22,7 +22,7 @@ typedef PickerDidFormatValue<T> = String Function(T value);
 /// 主体类
 class Picker {
   // 默认字体大小
-  static const defaultTextSize = 20.0;
+  static const double defaultTextSize = 20.0;
 
   /// 当前选中的选项的index
   List<int> selectedIdx = [];
@@ -245,8 +245,10 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         (picker.shouldHideHeader) ? SizedBox() : Container(
-          child: Row(
-            children: setupHeaderViews(),
+          child: Flexible(
+            child:  Row(
+              children: setupHeaderViews(),
+            ),
           ),
           decoration: picker.headerDecoration ?? BoxDecoration(
             border: Border(
@@ -258,9 +260,11 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
               : picker.headerColor,
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: setupUI(),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: setupUI(),
+          ), 
         ),
         picker.footer ?? SizedBox(width: 0.0, height: 0.0,),
       ],
@@ -350,7 +354,7 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
     List<Widget> items = [];
 
     PickerAdapter adapter = picker.adapter;
-    if (adapter == null) adapter.setColumn(-1);
+    if (adapter != null) adapter.setColumn(-1);
 
     if (adapter != null && adapter.length > 0) {
       for (int i = 0; i < picker._maxLevel; i++) {
@@ -414,7 +418,7 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
         var item = Container(child: tmpDelimiter.child, height: picker.height);
         if (tmpDelimiter.column < 0) {
           items.insert(0, item);
-        }else if (tmpDelimiter.column > items.length) {
+        }else if (tmpDelimiter.column >= items.length) {
           items.add(item);
         }else {
           items.insert(tmpDelimiter.column, item);
