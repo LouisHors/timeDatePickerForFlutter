@@ -93,7 +93,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     "November",
     "December"
   ];
-
+  /// 初始化方法, 目前有问题, 请务必指定 customColumnType
   PickerDateTimeDataAdapter({
     Picker picker,
     this.type = 0,
@@ -105,9 +105,9 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     this.value,
     this.minValue,
     this.maxValue,
-    this.yearSuffix,
-    this.monthSuffix,
-    this.daySuffix,
+    this.yearSuffix = "年",
+    this.monthSuffix = "月",
+    this.daySuffix = "日",
     this.minuteInterval,
     this.customColumnType,
     this.twoDigitYear = false
@@ -173,7 +173,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
 
   // 获取当前列的类型
   int getCurrentColumnType(int index) {
-    if (customColumnType != null) {
+    if (customColumnType != null && customColumnType != []) {
       return customColumnType[index];
     }
     List<int> items = columnType[type];
