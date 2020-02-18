@@ -31,8 +31,9 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
   final DateTime minValue, maxValue;
   final int minuteInterval;
   final String yearSuffix, monthSuffix, daySuffix;
-  final bool twoDigitYear;
-  final List<int> customColumnType;
+  final String hourSuffix, minuteSuffix, secondSuffix;  // 年月日时分秒单位, 默认给出
+  final bool twoDigitYear;  // 是否以最后两位的形式展示年, 默认展示四位年份
+  final List<int> customColumnType; // 展示类型, 目前有点问题, 需要强制设置
 
   static const List<String> MonthsList_EN = const [
     "Jan",
@@ -108,6 +109,9 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     this.yearSuffix = "年",
     this.monthSuffix = "月",
     this.daySuffix = "日",
+    this.hourSuffix = "时",
+    this.minuteSuffix = "分",
+    this.secondSuffix = "秒",
     this.minuteInterval,
     this.customColumnType,
     this.twoDigitYear = false
@@ -238,13 +242,13 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
         break;
       case 3:
       case 5:
-        _text = "${intToTwoDigitStr(index)}"; // 小时，秒
+        _text = "${intToTwoDigitStr(index)}${_checkStr(hourSuffix)}"; // 小时，秒
         break;
       case 4:
         if (minuteInterval == null || minuteInterval < 2) {
-          _text = "${intToTwoDigitStr(index)}"; // 时间间隔为1的时候（为设置
+          _text = "${intToTwoDigitStr(index)}${_checkStr(minuteSuffix)}"; // 时间间隔为1的时候（为设置
         }else {
-          _text = "${intToTwoDigitStr(index * minuteInterval)}";
+          _text = "${intToTwoDigitStr(index * minuteInterval)}${_checkStr(secondSuffix)}";
         }
         break;
       case 6:

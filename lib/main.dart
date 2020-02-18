@@ -79,9 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
       shouldHideHeader: false,
       adapter: new PickerDateTimeDataAdapter(
         customColumnType: [0, 1, 2],
-        yearSuffix: "年",
-        monthSuffix: "月",
-        daySuffix: "日"
       ),
       title: Text("请选择日期"),
       selectedStyle: TextStyle(color: Colors.blue),
@@ -93,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void showTimePicker(BuildContext context) {
     new Picker(
-      shouldHideHeader: true,
+      shouldHideHeader: false,
       adapter: new PickerDateTimeDataAdapter(
         customColumnType: [3, 4],
       ),
@@ -107,12 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void showDateTimePicker(BuildContext context) {
     new Picker(
-      shouldHideHeader: true,
+      shouldHideHeader: false,
       adapter: PickerDateTimeDataAdapter(
         customColumnType: [0, 1, 2, 3, 4],
-        yearSuffix: "年",
-        monthSuffix: "月",
-        daySuffix: "日",
       ),
       title: Text("请选择时间日期"),
       selectedStyle: TextStyle(color: Colors.blue),
