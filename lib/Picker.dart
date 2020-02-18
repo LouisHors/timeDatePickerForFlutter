@@ -245,10 +245,8 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         (picker.shouldHideHeader) ? SizedBox() : Container(
-          child: Flexible(
-            child:  Row(
-              children: setupHeaderViews(),
-            ),
+          child:  Row(
+            children: setupHeaderViews(),
           ),
           decoration: picker.headerDecoration ?? BoxDecoration(
             border: Border(
@@ -286,25 +284,23 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
     if (picker.cancel != null) {
       items.add(DefaultTextStyle(style: picker.cancelStyle ?? TextStyle(color: theme.accentColor, fontSize: Picker.defaultTextSize), child: picker.cancel));
     }else {
-      String tmpCancelText = picker.cancelText;
+      String tmpCancelText = picker.cancelText ?? "取消";
       if (tmpCancelText != null || tmpCancelText != "") {
-        items.add(FlatButton(
-            onPressed: () {
+        FlatButton cancelBtn = FlatButton(
+          onPressed: () {
               picker.doCancel(context);
-            },
-            child: Text(
+          }, 
+          child: Text(
               tmpCancelText,
               overflow: TextOverflow.ellipsis,
               style: picker.cancelStyle ?? TextStyle(color: theme.accentColor, fontSize: Picker.defaultTextSize),
-            ),
           )
         );
+        items.add(cancelBtn);
       }
     }
 
-    // 标题
-    items.add(
-      Expanded(
+    Expanded title = Expanded(
         child: Container(
           alignment: Alignment.center,
           child: picker.title == null 
@@ -316,8 +312,9 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
               child: picker.title
             ),
         )
-      )
     );
+    // 标题
+    items.add(title);
 
     // 确定按钮
     if (picker.confirm != null) {
@@ -328,20 +325,19 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
         )
       );
     }else {
-      String tmpConfirmText = picker.confirmText;
+      String tmpConfirmText = picker.confirmText ?? "确认";
       if (tmpConfirmText != null || tmpConfirmText != "") {
-        items.add(
-          FlatButton(
-            onPressed: () {
-              picker.doConfirm(context);
-            }, 
-            child: Text(
-              tmpConfirmText,
-              overflow: TextOverflow.ellipsis,
-              style: picker.confirmStyle ?? TextStyle(color: theme.accentColor, fontSize: Picker.defaultTextSize),
-            )
+        FlatButton confirm = FlatButton(
+          onPressed: () {
+            picker.doConfirm(context);
+          }, 
+          child: Text(
+            tmpConfirmText,
+            overflow: TextOverflow.ellipsis,
+            style: picker.confirmStyle ?? TextStyle(color: theme.accentColor, fontSize: Picker.defaultTextSize),
           )
         );
+        items.add(confirm);
       }
     }
     return items;

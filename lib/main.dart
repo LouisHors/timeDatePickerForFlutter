@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void showDatePicker(BuildContext context) {
     Picker(
-      shouldHideHeader: true,
+      shouldHideHeader: false,
       adapter: new PickerDateTimeDataAdapter(
         customColumnType: [0, 1, 2],
         yearSuffix: "年",
