@@ -145,6 +145,8 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     [0, 12],
     [31, 12, 0],
   ];
+
+  /// year 0, month 1, day 2, hour 3, minute 4, sec 5, am/pm 6, hour-ap: 7
   static const Map<int, int> columnTypeLength = {
     0: 0,
     1: 12,
@@ -155,8 +157,6 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     6: 2,
     7: 12
   };
-
-  /// year 0, month 1, day 2, hour 3, minute 4, sec 5, am/pm 6, hour-ap: 7
   static const List<List<int>> columnType = const [
     [1, 2, 0],
     [3, 4],
@@ -257,7 +257,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
         _text = "${_ampm[index]}";
         break;
       case 7:
-        _text = "${intToTwoDigitStr(index + 1)}";
+        _text = "${intToTwoDigitStr(index + 1)}${_checkStr(hourSuffix)}";
         break;
     }
     return makeText(null, _text, picker.selectedIdx[_column]==index);
@@ -336,7 +336,7 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     s = value.second;
 
     if (type != 2 && type != 6) s = 0;
-    int colType = getCurrentColumnType(index);
+    int colType = getCurrentColumnType(column);
     switch (colType) {
       case 0:
         year = _yearBegin + index;
