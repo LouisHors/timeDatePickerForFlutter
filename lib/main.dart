@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: Text("请选择日期"),
       selectedStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List value) {
-        print((picker.adapter as PickerDateTimeDataAdapter).value);
+        print((picker.adapter as PickerDateTimeDataAdapter).toString());
       },
     ).showModal(this.context);
   }
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: Text("请选择时间"),
       selectedStyle: TextStyle(color: Colors.blue),
       onConfirm: (Picker picker, List value) {
-        print((picker.adapter as PickerDateTimeDataAdapter).value);
+        print((picker.adapter as PickerDateTimeDataAdapter).getSelectedValueString());
       }
     ).showModal(this.context);
   }

@@ -409,6 +409,59 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     return tmpLen;
   }
 
+  String getSelectedValueString() {
+    List tmpSelectedIdx = picker.selectedIdx;
+    if (tmpSelectedIdx == null) return value.toString();
+    if (customColumnType == null) return value.toString();
+    String tmpStr = "";
+    int h = value.hour;
+    int m = value.minute;
+    int s = value.second;
+    for (int i = 0; i < customColumnType.length; i++) {
+      switch (customColumnType[i]) {
+        case 0: // 年
+          tmpStr = "${_yearBegin + tmpSelectedIdx[i]}";
+          break;
+        case 1: // 月
+          tmpStr = tmpStr + "${tmpSelectedIdx[i] + 1}";
+          break;
+        case 2: // 日
+          tmpStr = tmpStr + "${tmpSelectedIdx[i] + 1}";
+          break;
+        case 3: // 时
+          h = tmpSelectedIdx[i];
+          break;
+        case 4: // 分
+          m = (minuteInterval == null || minuteInterval < 2) ? m : m * minuteInterval;
+          break;
+        case 5: // 秒
+          s = tmpSelectedIdx[i];
+          break;
+        case 6: // am, pm 时
+          if (picker.selectedIdx[_columnAP] == 0) {
+          if (h == 0) h = 12;
+          if (h > 12) h = h -12;
+          }else {
+            if (h < 12) h = h + 12;
+            if (h == 12) h = 0;
+          }
+          tmpStr = tmpStr + h.toString();
+          break;
+        case 7:
+          h = tmpSelectedIdx[i] + 1;
+          if (_columnAP >= 0 && picker.selectedIdx[_columnAP] == 1) h = h + 12;
+          if (h > 23) h = 0;
+          tmpStr = tmpStr + h.toString();
+          break;
+      }
+    }
+
+    if (h != null) tmpStr = tmpStr + h.toString();
+    if (m != null) tmpStr = tmpStr + m.toString();
+    if (s != null) tmpStr = tmpStr + s.toString();
+    return tmpStr;
+  }
+
   // 根据给定的年月返回月份天数
   int _calculateDateCount(int year, int month) {
     // 31天的
