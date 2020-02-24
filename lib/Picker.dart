@@ -87,7 +87,7 @@ class Picker {
     this.confirm,
     this.cancelText,
     this.confirmText,
-    this.height = 150.0,
+    this.height = 266.0,
     this.itemHeight = 28.0,
     this.textStyle,
     this.cancelStyle,
@@ -396,7 +396,7 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
         );
 
         items.add(tmpView);
-        if (!picker.changeToFirst && picker.selectedIdx[i] >= tmpLength) {
+        if (!picker.changeToFirst && (picker.selectedIdx[i] >= tmpLength)) {
           Timer(Duration(milliseconds: 100), () {
             print("计时器正在运作");
             scrollController[i].jumpToItem(tmpLength - 1);
@@ -427,7 +427,6 @@ class PickerWidgetState<T> extends State<_PickerWidget> {
 
   void updateScrollController(int i) {
     if (_changing || !picker.adapter.isLinkage) return;
-
     _changing = true;
     for (int j = 0; j < picker.selectedIdx.length; j++) {
       if (j != i) {

@@ -201,8 +201,10 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     if (value == null) value = DateTime.now();
     _columnAP = _getColumnAPIndex();
     int _maxLevel = getMaxLevel();
-    if (picker.selectedIdx == null) picker.selectedIdx = new List<int>();
-    for (int i = 0; i < _maxLevel; i++) picker.selectedIdx.add(0);
+    if (picker.selectedIdx == null || picker.selectedIdx.length == 0) {
+      if (picker.selectedIdx == null) picker.selectedIdx = new List<int>();
+      for (int i = 0; i < _maxLevel; i++) picker.selectedIdx.add(0);
+    }
   }
 
   int _getColumnAPIndex() {

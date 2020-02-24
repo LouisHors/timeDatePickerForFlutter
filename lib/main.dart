@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     new Picker(
       shouldHideHeader: false,
       adapter: new PickerDateTimeDataAdapter(
-        customColumnType: [3, 4],
+        customColumnType: [6, 7, 4],
       ),
       title: Text("请选择时间"),
       selectedStyle: TextStyle(color: Colors.blue),
