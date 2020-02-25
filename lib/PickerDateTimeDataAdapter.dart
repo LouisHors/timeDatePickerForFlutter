@@ -414,25 +414,25 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
     if (tmpSelectedIdx == null) return value.toString();
     if (customColumnType == null) return value.toString();
     String tmpStr = "";
-    int h = value.hour;
-    int m = value.minute;
-    int s = value.second;
+    int h = -1;
+    int m = -1;
+    int s = -1;
     for (int i = 0; i < customColumnType.length; i++) {
       switch (customColumnType[i]) {
         case 0: // 年
           tmpStr = "${_yearBegin + tmpSelectedIdx[i]}";
           break;
         case 1: // 月
-          tmpStr = tmpStr + "${tmpSelectedIdx[i] + 1}";
+          tmpStr = tmpStr + (tmpStr.isEmpty ? "" : "/") + "${tmpSelectedIdx[i] + 1}";
           break;
         case 2: // 日
-          tmpStr = tmpStr + "${tmpSelectedIdx[i] + 1}";
+          tmpStr = tmpStr + (tmpStr.isEmpty ? "" : "/") + "${tmpSelectedIdx[i] + 1}";
           break;
         case 3: // 时
           h = tmpSelectedIdx[i];
           break;
         case 4: // 分
-          m = (minuteInterval == null || minuteInterval < 2) ? m : m * minuteInterval;
+          m = (minuteInterval == null || minuteInterval < 2) ? tmpSelectedIdx[i] : tmpSelectedIdx[i] * minuteInterval;
           break;
         case 5: // 秒
           s = tmpSelectedIdx[i];
@@ -445,20 +445,24 @@ class PickerDateTimeDataAdapter extends PickerAdapter<DateTime> {
             if (h < 12) h = h + 12;
             if (h == 12) h = 0;
           }
-          tmpStr = tmpStr + h.toString();
           break;
         case 7:
           h = tmpSelectedIdx[i] + 1;
           if (_columnAP >= 0 && picker.selectedIdx[_columnAP] == 1) h = h + 12;
           if (h > 23) h = 0;
-          tmpStr = tmpStr + h.toString();
           break;
       }
     }
 
-    if (h != null) tmpStr = tmpStr + h.toString();
-    if (m != null) tmpStr = tmpStr + m.toString();
-    if (s != null) tmpStr = tmpStr + s.toString();
+    if (h != null && h != -1) {
+      if (tmpStr.isEmpty) {
+        tmpStr = intToTwoDigitStr(h);
+      }else {
+        tmpStr = tmpStr + " " + intToTwoDigitStr(h);
+      }
+    }
+    if (m != null && m != -1) tmpStr = tmpStr + ":" + intToTwoDigitStr(m);
+    if (s != null && s != -1) tmpStr = tmpStr + ":" + intToTwoDigitStr(s);
     return tmpStr;
   }
 
