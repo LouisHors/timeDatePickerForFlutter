@@ -22,7 +22,7 @@ typedef PickerDidFormatValue<T> = String Function(T value);
 /// 主体类
 class Picker {
   // 默认字体大小
-  static const double defaultTextSize = 20.0;
+  static const double defaultTextSize = 18.0;
 
   /// 当前选中的选项的index
   List<int> selectedIdx = [];
@@ -88,7 +88,7 @@ class Picker {
     this.cancelText,
     this.confirmText,
     this.height = 266.0,
-    this.itemHeight = 28.0,
+    this.itemHeight = 30.0,
     this.textStyle,
     this.cancelStyle,
     this.confirmStyle,
